@@ -5,5 +5,8 @@ import java.io.IOException;
 public void main(String[] args) throws IOException {
     Dial dial = new Dial(100);
     int password = dial.spinDial("C:/Users/benmc/IdeaProjects/AdventOfCode2025/inputFiles/dial.txt");
-    System.out.println(password);
+    System.out.println("Original password is " + password);
+
+    int superPassword = dial.superSpinDial("C:/Users/benmc/IdeaProjects/AdventOfCode2025/inputFiles/dial.txt");
+    System.out.println("New password is " + superPassword);
 }
