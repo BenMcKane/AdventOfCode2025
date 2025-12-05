@@ -3,7 +3,6 @@ package src;
 import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.Scanner;
 
 public class Dial {
 
@@ -11,13 +10,18 @@ public class Dial {
     private static int modulus;
 
     public Dial(int modulus) {
-        this.position = 0;
+        this.position = 50;
         this.modulus = modulus;
     }
 
     private void spin(int amount) {
         this.position += amount;
         this.position = this.position % this.modulus;
+        if (this.position < 0) this.position += this.modulus;
+    }
+
+    private void reset() {
+        this.position = 0;
     }
 
     private int[] spinOrder(String fileName) throws IOException {
@@ -39,8 +43,16 @@ public class Dial {
         return instructions;
     }
 
-    public void spinDial(String fileName) throws IOException {
-        System.out.println(this.spinOrder(fileName)[7]);
+    public int spinDial(String fileName) throws IOException {
+        int[] instructions = this.spinOrder(fileName);
+        int password = 0;
+
+        for (int i = 0; i < instructions.length; i++) {
+            this.spin(instructions[i]);
+            if (this.position == 0) password++;
+        }
+
+        return password;
     }
 
 }
